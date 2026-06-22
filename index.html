@@ -15,46 +15,29 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <script>
+    
      <script>
 async function login() {
-  const value = document.querySelector("#card").value.trim();
-  const password = document.querySelector("#password").value.trim();
+  const card = document.getElementById("card").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-  // التحقق أن رقم البطاقة 12 رقمًا
-  if (!/^\d{12}$/.test(value)) {
+  // التحقق من أن رقم البطاقة مكون من 12 رقمًا
+  if (!/^\d{12}$/.test(card)) {
     alert("عزيزي المستفيد تأكد من صحة رقم البطاقة");
     return;
   }
 
-  // التحقق من كلمة المرور الثابتة
+  // التحقق من كلمة المرور
   if (password !== "1998") {
     alert("عزيزي المستفيد تأكد من صحة كلمة المرور");
     return;
   }
 
-  try {
-    const response = await fetch("users.json");
-    const users = await response.json();
-
-    // التحقق من وجود رقم البطاقة
-    const cardExists = users.find(item => item.card === value);
-
-    if (!cardExists) {
-      alert("عزيزي المستفيد تأكد من صحة رقم البطاقة");
-      return;
-    }
-
-    // تسجيل الدخول
-    window.location = "account.html";
-
-  } catch (err) {
-    console.error(err);
-    alert("حدث خطأ أثناء تحميل بيانات المستخدمين");
-  }
+  // تسجيل الدخول
+  window.location.href = "account.html";
 }
 </script>
-    </script>
+    
     <title>تسجيل الدخول</title>
   </head>
   <body>
@@ -76,13 +59,13 @@ async function login() {
               id="card"
               name="card"
             />
-            <input
-              type="text"
+               <input
+             type="password"
               placeholder="كلمة السر"
               id="password"
-              name="pssword"
-            />
-            <button onclick="{login()}">الدخول</button>
+              name="password"
+                />
+            <button type="button" onclick="login()">الدخول</button>
           </div>
           <div class="info">
             <div>
