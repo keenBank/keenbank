@@ -16,17 +16,44 @@
       rel="stylesheet"
     />
     <script>
-      function login() {
-        const value = document.querySelector("#card").value;
-        const password = document.querySelector("#password").value;
-        if (value == "29830081399146103" && password == "1998") {
-          window.location = "/account.html";
-        } else if (value != "29830081399146103") {
-          alert("عزيزي المستفيد تاكد من صحة رقم البطاقة");
-        } else if (password != "1998") {
-          alert("عزيزي المستفيد الرمز مكون من اربع خانات فقط حاول مجدداً");
-        }
-      }
+      async function login() {
+  const value = document.querySelector("#card").value.trim();
+  const password = document.querySelector("#password").value.trim();
+
+  // أول شيء تحقق أن كلمة المرور 4 خانات
+  if (password.length !== 4) {
+    alert("عزيزي المستفيد الرمز مكون من اربع خانات فقط حاول مجدداً");
+    return;
+  }
+
+  try {
+    const response = await fetch("users.json");
+    const users = await response.json();
+
+    // هل رقم البطاقة موجود؟
+    const cardExists = users.find(item => item.card === value);
+
+    if (!cardExists) {
+      alert("عزيزي المستفيد تاكد من صحة رقم البطاقة");
+      return;
+    }
+
+    // هل رقم البطاقة وكلمة المرور متطابقين؟
+    const user = users.find(
+      item => item.card === value && item.password === password
+    );
+
+    if (user) {
+      window.location = "/account.html";
+    } else {
+      alert("عزيزي المستفيد تأكد من صحة كلمة المرور");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("حدث خطأ أثناء تحميل بيانات المستخدمين");
+  }
+}
     </script>
     <title>تسجيل الدخول</title>
   </head>
