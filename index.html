@@ -16,43 +16,44 @@
       rel="stylesheet"
     />
     <script>
-      async function login() {
+     <script>
+async function login() {
   const value = document.querySelector("#card").value.trim();
   const password = document.querySelector("#password").value.trim();
 
-  // أول شيء تحقق أن اسم المستخدم 5 خانات
-if (value.length !== 5) {
-  alert("عزيزي المستفيد رقم البطاقة مكون من خمس خانات فقط حاول مجدداً");
-  return;
-}
+  // التحقق أن رقم البطاقة 12 رقمًا
+  if (!/^\d{12}$/.test(value)) {
+    alert("عزيزي المستفيد تأكد من صحة رقم البطاقة");
+    return;
+  }
+
+  // التحقق من كلمة المرور الثابتة
+  if (password !== "1998") {
+    alert("عزيزي المستفيد تأكد من صحة كلمة المرور");
+    return;
+  }
+
   try {
     const response = await fetch("users.json");
     const users = await response.json();
 
-    // هل رقم البطاقة موجود؟
+    // التحقق من وجود رقم البطاقة
     const cardExists = users.find(item => item.card === value);
 
     if (!cardExists) {
-      alert("عزيزي المستفيد تاكد من صحة رقم البطاقة");
+      alert("عزيزي المستفيد تأكد من صحة رقم البطاقة");
       return;
     }
 
-    // هل رقم البطاقة وكلمة المرور متطابقين؟
-    const user = users.find(
-      item => item.card === value && item.password === password
-    );
-
-    if (user) {
-      window.location = "account.html";
-    } else {
-      alert("عزيزي المستفيد تأكد من صحة كلمة المرور");
-    }
+    // تسجيل الدخول
+    window.location = "account.html";
 
   } catch (err) {
     console.error(err);
     alert("حدث خطأ أثناء تحميل بيانات المستخدمين");
   }
 }
+</script>
     </script>
     <title>تسجيل الدخول</title>
   </head>
