@@ -20,12 +20,11 @@
   const value = document.querySelector("#card").value.trim();
   const password = document.querySelector("#password").value.trim();
 
-  // أول شيء تحقق أن كلمة المرور 4 خانات
-  if (password.length !== 4) {
-    alert("عزيزي المستفيد الرمز مكون من اربع خانات فقط حاول مجدداً");
-    return;
-  }
-
+  // أول شيء تحقق أن اسم المستخدم 5 خانات
+if (value.length !== 5) {
+  alert("عزيزي المستفيد رقم البطاقة مكون من خمس خانات فقط حاول مجدداً");
+  return;
+}
   try {
     const response = await fetch("users.json");
     const users = await response.json();
@@ -44,7 +43,7 @@
     );
 
     if (user) {
-      window.location = "/account.html";
+      window.location = "account.html";
     } else {
       alert("عزيزي المستفيد تأكد من صحة كلمة المرور");
     }
